@@ -2,22 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { GetPokemonList } from '../actions/pokemonActions';
-import { Link, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import config from '../config';
 
 const PokemonList = (props: any) => {
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
   const dispatch: any = useDispatch();
   const pokemonList = useSelector((state: any) => state.PokemonList);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    FetchData(1);
+    _.isEmpty(pokemonList.data) && FetchData(pokemonList.page);
   }, []);
 
-  const FetchData = (page = 1) => {
+  const FetchData = (page = pokemonList.page) => {
     dispatch(GetPokemonList(page));
   };
 
@@ -77,7 +77,11 @@ const PokemonList = (props: any) => {
           pageCount={Math.ceil(pokemonList.count / config.PAGE_MAX)}
           pageRangeDisplayed={2}
           marginPagesDisplayed={1}
-          onPageChange={(pages) => FetchData(pages.selected + 1)}
+          initialPage={pokemonList.page - 1}
+          onPageChange={(pages) => {
+            if (pages.selected === pokemonList.page - 1) return; // initialPage triggers onPageChange, this is needed to avoid fetching the same data that's already in state.
+            FetchData(pages.selected + 1);
+          }}
           containerClassName="pagination"
         />
       )}

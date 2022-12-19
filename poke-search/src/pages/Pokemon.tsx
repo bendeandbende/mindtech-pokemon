@@ -42,6 +42,13 @@ const Pokemon = (props: any) => {
               return <p>{pokemon.ability.name}</p>;
             })}
           </div>
+          <button
+            onClick={() => {
+              // function for storing caught pokemon
+            }}
+          >
+            catch
+          </button>
         </div>
       );
     }

@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import 'nes.css/css/nes.min.css';
 import './App.css';
-import Pokemon from './containers/Pokemon';
-import PokemonList from './containers/PokemonList';
+import Pokemon from './pages/Pokemon';
+import PokemonList from './pages/PokemonList';
 
 function App() {
   return (

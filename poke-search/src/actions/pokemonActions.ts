@@ -14,6 +14,8 @@ export const GetPokemonList = (page: any) => async (dispatch: any) => {
       `https://pokeapi.co/api/v2/pokemon?limit=${config.PAGE_MAX}&offset=${offset}`
     );
 
+    res.data.page = page;
+
     dispatch({
       type: 'POKEMON_LIST_SUCCESS',
       payload: res.data,
@@ -43,4 +45,8 @@ export const getPokemon = (pokemon: any) => async (dispatch: any) => {
       type: 'POKEMON_MULTIPLE_FAIL',
     });
   }
+};
+
+export const GetCaughtPokemonList = (page: any) => (dispatch: any) => {
+  // action for caught pokemon
 };

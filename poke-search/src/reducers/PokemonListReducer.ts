@@ -1,7 +1,9 @@
 const DefaultState = {
   loading: false,
   data: [],
+  caughtPokemonList: [],
   errorMsg: '',
+  page: 1,
 };
 
 const PokemonListReducer = (state: any = DefaultState, action: any) => {
@@ -26,6 +28,7 @@ const PokemonListReducer = (state: any = DefaultState, action: any) => {
         ...state,
         loading: false,
         data: action.payload.results,
+        page: action.payload.page,
         count: action.payload.count,
         errorMsg: '',
       };

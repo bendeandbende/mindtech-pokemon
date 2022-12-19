@@ -4,7 +4,7 @@ const DefaultState = {
   errorMsg: '',
 };
 
-const PokemonMultileReduer = (state: any = DefaultState, action: any) => {
+const PokemonMultipleReduer = (state: any = DefaultState, action: any) => {
   switch (action.type) {
     case 'POKEMON_MULTIPLE_LOADING':
       return {
@@ -37,4 +37,4 @@ const PokemonMultileReduer = (state: any = DefaultState, action: any) => {
   }
 };
 
-export default PokemonMultileReduer;
+export default PokemonMultipleReduer;
