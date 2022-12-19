@@ -65,7 +65,7 @@ const PokemonList = (props: any) => {
         <button
           className="nes-btn"
           onClick={() => {
-            // missing function for the time being
+            navigate(`/pokemon/${search}`);
           }}
         >
           Search
