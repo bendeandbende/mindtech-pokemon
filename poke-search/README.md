@@ -39,4 +39,4 @@ The caught Pokémon are stored in local storage so they won't go back to the wil
 
 For pagination react-pagenation was used. For performance, in pagination handler an if statement is used to avoid refetching data. Setting an initialPage property on ReactPagination triggers an onChange event, that's why it was necessarry.
 
-Pagination is onyl used when all pokemon are fetched, otherwise they are shown on one page.
+Pagination is only used when all pokemon are fetched, otherwise they are shown on one page.
