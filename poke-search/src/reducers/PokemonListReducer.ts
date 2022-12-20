@@ -32,6 +32,25 @@ const PokemonListReducer = (state: any = DefaultState, action: any) => {
         count: action.payload.count,
         errorMsg: '',
       };
+    case 'POKEMON_LIST_CAUGHT':
+      return {
+        ...state,
+        caughtPokemonList: action.payload,
+        errorMsg: '',
+      };
+    case 'POKEMON_CAUGHT':
+      return {
+        ...state,
+        caughtPokemonList: [...state.caughtPokemonList, action.pokemonName],
+        errorMsg: '',
+      };
+    case 'POKEMON_RELEASED':
+      return {
+        ...state,
+        caughtPokemonList: [action.caughPokemonListUpdated],
+        errorMsg: '',
+      };
+
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import 'nes.css/css/nes.min.css';
 import './App.css';
 import Pokemon from './pages/Pokemon';
-import PokemonList from './pages/PokemonList';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <NavLink to={'/'}>Home</NavLink>
       </nav>
       <Routes>
-        <Route path={'/'} element={<PokemonList />}></Route>
+        <Route path={'/'} element={<Home />}></Route>
         <Route path={'/pokemon/:pokemon'} element={<Pokemon />}></Route>
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>

@@ -47,6 +47,58 @@ export const getPokemon = (pokemon: any) => async (dispatch: any) => {
   }
 };
 
-export const GetCaughtPokemonList = (page: any) => (dispatch: any) => {
-  // action for caught pokemon
+export const GetCaughtPokemonList = () => (dispatch: any) => {
+  const caughtPokemonList: string[] = [];
+  const caughtPokemonListJSON = localStorage.getItem('caughtPokemonList') ?? '';
+
+  if (caughtPokemonListJSON) {
+    caughtPokemonList.push(...JSON.parse(caughtPokemonListJSON));
+  }
+
+  dispatch({
+    type: 'POKEMON_LIST_CAUGHT',
+    payload: caughtPokemonList,
+  });
+};
+
+export const CatchPokemon = (pokemonName: string) => (dispatch: any) => {
+  if (localStorage.getItem('caughtPokemonList')?.length) {
+    const caughtPokemonList = localStorage.getItem('caughtPokemonList') || '';
+    const caughtPokemonListParsed = JSON.parse(caughtPokemonList);
+
+    if (caughtPokemonListParsed.includes(pokemonName)) return;
+
+    caughtPokemonListParsed.push(pokemonName);
+
+    localStorage.setItem(
+      'caughtPokemonList',
+      JSON.stringify(caughtPokemonListParsed)
+    );
+  } else {
+    localStorage.setItem('caughtPokemonList', JSON.stringify([pokemonName]));
+  }
+
+  dispatch({
+    type: 'POKEMON_CAUGHT',
+    pokemonName,
+  });
+};
+
+export const ReleasePokemon = (pokemonName: string) => (dispatch: any) => {
+  const caughtPokemonList = localStorage.getItem('caughtPokemonList') || '';
+  const caughtPokemonListParsed = JSON.parse(caughtPokemonList);
+
+  const caughPokemonListUpdated = caughtPokemonListParsed.filter(
+    (pokemon: string) => pokemonName !== pokemon
+  );
+
+  localStorage.setItem(
+    'caughtPokemonList',
+    JSON.stringify(caughPokemonListUpdated)
+  );
+
+  dispatch({
+    type: 'POKEMON_RELEASED',
+    caughPokemonListUpdated,
+  });
 };

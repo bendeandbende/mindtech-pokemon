@@ -33,9 +33,11 @@ nav a {
   margin: 10px 0;
   padding: 10px;
   width: 90%;
-  justify-content: center;
+  height: 200px;
+  justify-content: space-between;
   border: 4px solid yellow;
   border-radius: 7px;
+  align-items: center;
 }
 
 .list-wrapper a {
@@ -57,6 +59,10 @@ nav a {
   width: 30%;
 }
 
+.pokemon-image-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .search-bar-wrapper {
   display: flex;
   justify-content: center;
@@ -69,7 +75,7 @@ nav a {
 .pagination {
   display: flex;
   justify-content: space-between;
-  width: 500px;
+  width: 50%;
   margin: auto;
   list-style: none;
   padding: 0;
