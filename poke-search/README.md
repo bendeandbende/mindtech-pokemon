@@ -16,7 +16,7 @@ Search for a specific Pokémon.
 
 ### Filter by type
 
-Search by Pokémon Types
+Search by Pokémon Types.
 
 ### Catching Pokémon
 
@@ -24,11 +24,11 @@ Upon opening a Pokémon card, you can catch is, too.
 
 ### Releasing Pokémon
 
-Opposite of catching Pokémon
+Opposite of catching Pokémon.
 
 ### Filter by caught Pokémon
 
-Showing caught Pokémon only
+Showing caught Pokémon only. They are listed chronologically, so first-caught is first.
 
 ## About the code
 
