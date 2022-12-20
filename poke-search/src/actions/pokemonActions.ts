@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import config from '../config';
-import { EActions, TPage } from '../types';
+import { EActions, TPage, TPokemonType } from '../types';
 
 export const GetPokemonTypes = () => async (dispatch: any) => {
   try {
@@ -23,7 +23,11 @@ export const GetPokemonTypes = () => async (dispatch: any) => {
 };
 
 export const GetPokemonList =
-  (page: TPage, pokemonType: string = 'All types') =>
+  (
+    page: TPage,
+    pokemonType: TPokemonType = 'All types',
+    caughtOnly: boolean = false
+  ) =>
   async (dispatch: any) => {
     try {
       dispatch({
@@ -61,7 +65,15 @@ export const GetPokemonList =
     }
   };
 
-export const getPokemon = (pokemon: any) => async (dispatch: any) => {
+export const ToggleShowCaughtOnly =
+  (isFilteredForCaught: boolean) => (dispatch: any) => {
+    dispatch({
+      type: EActions.ToggleShowCaughtOnly,
+      isFilteredForCaught,
+    });
+  };
+
+export const GetPokemon = (pokemon: any) => async (dispatch: any) => {
   try {
     dispatch({
       type: EActions.PokemonMultipleLoading,

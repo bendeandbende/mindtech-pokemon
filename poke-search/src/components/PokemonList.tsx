@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 
-import { TPokemonListItems } from '../types';
+import { TPokemonListItems, TPokemonName } from '../types';
 import { RootState } from '../Store';
 
 import Spinner from './UI/Spinner';
@@ -19,16 +19,18 @@ const PokemonList = ({ pokemonData }: { pokemonData: TPokemonListItems[] }) => {
     return (
       <div className="list-wrapper">
         {pokemonData.map((pokemon: TPokemonListItems) => {
+          const pokemonName = pokemon.name || pokemon;
+
           return (
             <div
               className="pokemon-item"
-              key={pokemon.name}
+              key={pokemonName as TPokemonName}
               onClick={() => {
-                navigate(`/pokemon/${pokemon.name}`);
+                navigate(`/pokemon/${pokemonName}`);
               }}
             >
-              <p>{pokemon.name}</p>
-              {pokemonList.caughtPokemonList.includes(pokemon.name) && (
+              <p>{pokemonName as TPokemonName}</p>
+              {pokemonList.caughtPokemonList.includes(pokemonName) && (
                 <i className="nes-pokeball"></i>
               )}
             </div>

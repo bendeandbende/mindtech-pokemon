@@ -8,6 +8,7 @@ const DefaultState: TPokemonListState = {
   page: 1,
   pokemonTypes: [],
   selectedType: 'All types',
+  showCaughtOnly: false,
 };
 
 const PokemonListReducer = (state: any = DefaultState, action: TActions) => {
@@ -32,6 +33,13 @@ const PokemonListReducer = (state: any = DefaultState, action: TActions) => {
         ...state,
         loading: false,
         pokemonTypes: action.payload.results,
+        errorMsg: '',
+      };
+
+    case EActions.ToggleShowCaughtOnly:
+      return {
+        ...state,
+        showCaughtOnly: action.isFilteredForCaught,
         errorMsg: '',
       };
 

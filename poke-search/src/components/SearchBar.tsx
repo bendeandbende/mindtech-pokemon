@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 
-import { GetPokemonList, GetPokemonTypes } from '../actions/pokemonActions';
+import {
+  GetPokemonList,
+  GetPokemonTypes,
+  ToggleShowCaughtOnly,
+} from '../actions/pokemonActions';
 import { RootState } from '../Store';
 import Button from './UI/Button';
 import { TPokemonListItems } from '../types';
@@ -12,7 +16,6 @@ const SearchBar = () => {
   const pokemonList = useSelector((state: RootState) => state.PokemonList);
   const dispatch: any = useDispatch();
   const [search, setSearch] = useState('');
-  const [filteredForCaught, setFilteredForCaught] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,26 +39,29 @@ const SearchBar = () => {
         <p>Search: </p>
         <input className="nes-input" type="text" onChange={searchHandler} />
         <Button onClick={pokemonPickHandler}>Search</Button>
-        <select
-          defaultValue={pokemonList.selectedType}
-          onChange={pokeTypeSelectHandler}
-        >
-          <option>All types</option>
-          {pokemonList.pokemonTypes.map((pokeType: TPokemonListItems) => (
-            <option key={pokeType.name}>{pokeType.name}</option>
-          ))}
-        </select>
+        {!pokemonList.showCaughtOnly && (
+          <select
+            defaultValue={pokemonList.selectedType}
+            onChange={pokeTypeSelectHandler}
+          >
+            <option>All types</option>
+            {pokemonList.pokemonTypes.map((pokeType: TPokemonListItems) => (
+              <option key={pokeType.name}>{pokeType.name}</option>
+            ))}
+          </select>
+        )}
       </div>
+
       <label>
         <input
           type="checkbox"
           className="nes-checkbox"
-          checked={filteredForCaught}
+          checked={pokemonList.showCaughtOnly}
           onChange={() => {
-            setFilteredForCaught(!filteredForCaught);
+            dispatch(ToggleShowCaughtOnly(!pokemonList.showCaughtOnly));
           }}
         />
-        <span>Caught</span>
+        <span>Show my Pokémon only</span>
       </label>
     </div>
   );

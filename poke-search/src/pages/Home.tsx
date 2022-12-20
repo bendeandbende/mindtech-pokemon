@@ -30,9 +30,16 @@ const Home = () => {
   return (
     <div>
       <SearchBar />
-      <PokemonList pokemonData={pokemonList.data} />
+      <PokemonList
+        pokemonData={
+          pokemonList.showCaughtOnly
+            ? pokemonList.caughtPokemonList
+            : pokemonList.data
+        }
+      />
       {!_.isEmpty(pokemonList.data) &&
-        pokemonList.selectedType === 'All types' && (
+        pokemonList.selectedType === 'All types' &&
+        !pokemonList.showCaughtOnly && (
           <ReactPaginate
             pageCount={Math.ceil(pokemonList.count / config.PAGE_MAX)}
             pageRangeDisplayed={2}

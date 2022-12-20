@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getPokemon } from '../actions/pokemonActions';
+import { GetPokemon } from '../actions/pokemonActions';
 import PokemonDetailedCard from '../components/PokemonDetailedCard';
 
 const Pokemon = () => {
@@ -9,7 +9,7 @@ const Pokemon = () => {
   const dispatch: any = useDispatch();
 
   useEffect(() => {
-    dispatch(getPokemon(pokemonName));
+    dispatch(GetPokemon(pokemonName));
   }, []);
 
   return (

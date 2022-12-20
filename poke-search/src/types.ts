@@ -22,6 +22,7 @@ export type TPokemonListState = {
   page: TPage;
   pokemonTypes: [];
   selectedType: TPokemonType;
+  showCaughtOnly: boolean;
 };
 
 export type TPokemonState = {
@@ -39,6 +40,7 @@ export type TActions = {
   count?: number;
   pokeData?: [];
   page?: TPage;
+  isFilteredForCaught?: boolean;
 };
 
 export enum EActions {
@@ -54,4 +56,5 @@ export enum EActions {
   PokemonTypesLoading = 'POKEMON_TYPES_LOADING',
   PokemonTypesFail = 'POKEMON_TYPES_FAIL',
   PokemonTypesSuccess = 'POKEMON_TYPES_SUCCESS',
+  ToggleShowCaughtOnly = 'TOGGLE_SHOW_CAUGHT_ONLY',
 }
