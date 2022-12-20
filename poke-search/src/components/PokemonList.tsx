@@ -2,18 +2,23 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 
-const PokemonList = () => {
-  const pokemonList = useSelector((state: any) => state.PokemonList);
+import { TPokemonListItems } from '../types';
+import { RootState } from '../Store';
+
+import Spinner from './UI/Spinner';
+
+const PokemonList = ({ pokemonData }: { pokemonData: TPokemonListItems[] }) => {
+  const pokemonList = useSelector((state: RootState) => state.PokemonList);
   const navigate = useNavigate();
 
   if (pokemonList.loading) {
-    return <p>LOADING...</p>;
+    return <Spinner />;
   }
 
-  if (!_.isEmpty(pokemonList.data)) {
+  if (!_.isEmpty(pokemonData)) {
     return (
       <div className="list-wrapper">
-        {pokemonList.data.map((pokemon: any) => {
+        {pokemonData.map((pokemon: TPokemonListItems) => {
           return (
             <div
               className="pokemon-item"
@@ -37,7 +42,7 @@ const PokemonList = () => {
     return <p>{pokemonList.errorMsg}</p>;
   }
 
-  return <p>something went wrong</p>;
+  return <p>Something went wrong</p>;
 };
 
 export default PokemonList;

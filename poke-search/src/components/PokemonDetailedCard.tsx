@@ -1,17 +1,26 @@
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { CatchPokemon, ReleasePokemon } from '../actions/pokemonActions';
+import Button from './UI/Button';
+import { RootState } from '../Store';
+import { TPokemonName } from '../types';
+import Spinner from './UI/Spinner';
+import Card from './UI/Card';
 
-const PokemonDetailedCard = ({ pokemonName }: { pokemonName: string }) => {
-  const pokemonState = useSelector((state: any) => state.Pokemon);
-  const pokemonList = useSelector((state: any) => state.PokemonList);
+const PokemonDetailedCard = ({
+  pokemonName,
+}: {
+  pokemonName: TPokemonName;
+}) => {
+  const pokemonState = useSelector((state: RootState) => state.Pokemon);
+  const pokemonList = useSelector((state: RootState) => state.PokemonList);
   const dispatch: any = useDispatch();
 
   if (!_.isEmpty(pokemonState.data[pokemonName])) {
     const pokeData = pokemonState.data[pokemonName];
 
     return (
-      <div className="pokemon-wrapper nes-container is-rounded">
+      <Card>
         <div className="item">
           <h1>Pictures</h1>
           <div className="pokemon-image-container">
@@ -23,9 +32,11 @@ const PokemonDetailedCard = ({ pokemonName }: { pokemonName: string }) => {
         </div>
         <div className="item">
           <h1>Stats</h1>
+          <p>height: {pokeData.height}"</p>
+          <p>weight: {pokeData.weight} lb</p>
           {pokeData.stats.map((pokemon: any) => {
             return (
-              <p>
+              <p key={pokemon.stat.name}>
                 {pokemon.stat.name}: {pokemon.base_stat}
               </p>
             );
@@ -34,11 +45,10 @@ const PokemonDetailedCard = ({ pokemonName }: { pokemonName: string }) => {
         <div className="item">
           <h1>Abilities</h1>
           {pokeData.abilities.map((pokemon: any) => {
-            return <p>{pokemon.ability.name}</p>;
+            return <p key={pokemon.ability.name}>{pokemon.ability.name}</p>;
           })}
         </div>
-        <button
-          className="nes-btn"
+        <Button
           onClick={() => {
             pokemonList.caughtPokemonList?.includes(pokemonName)
               ? dispatch(ReleasePokemon(pokemonName))
@@ -48,13 +58,13 @@ const PokemonDetailedCard = ({ pokemonName }: { pokemonName: string }) => {
           {pokemonList.caughtPokemonList?.includes(pokemonName)
             ? 'Release'
             : 'Catch'}
-        </button>
-      </div>
+        </Button>
+      </Card>
     );
   }
 
   if (pokemonState.loading) {
-    return <p>loading...</p>;
+    return <Spinner />;
   }
 
   if (pokemonState.errorMsg !== '') {

@@ -1,26 +1,28 @@
-const DefaultState = {
+import { EActions, TActions, TPokemonState } from '../types';
+
+const DefaultState: TPokemonState = {
   loading: false,
   data: {},
   errorMsg: '',
 };
 
-const PokemonMultipleReduer = (state: any = DefaultState, action: any) => {
+const PokemonMultipleReduer = (state: any = DefaultState, action: TActions) => {
   switch (action.type) {
-    case 'POKEMON_MULTIPLE_LOADING':
+    case EActions.PokemonMultipleLoading:
       return {
         ...state,
         loading: true,
         errorMsg: '',
       };
 
-    case 'POKEMON_MULTIPLE_FAIL':
+    case EActions.PokemonMultipleFail:
       return {
         ...state,
         loading: false,
         errorMsg: 'Unable to find pokemon',
       };
 
-    case 'POKEMON_MULTIPLE_SUCCESS':
+    case EActions.PokemonMultipleSucces:
       return {
         ...state,
         loading: false,
@@ -28,7 +30,7 @@ const PokemonMultipleReduer = (state: any = DefaultState, action: any) => {
         data: {
           // instead of overwriting data, we cache the previously viewd pokemon in order to avoid fetching again (to achieve better user experience)
           ...state.data,
-          [action.pokemonName]: action.payload,
+          [action.pokemonName as string]: action.payload,
         },
       };
 

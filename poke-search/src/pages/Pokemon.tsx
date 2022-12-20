@@ -5,7 +5,7 @@ import { getPokemon } from '../actions/pokemonActions';
 import PokemonDetailedCard from '../components/PokemonDetailedCard';
 
 const Pokemon = () => {
-  const pokemonName: any = useParams().pokemon;
+  const pokemonName: string | undefined = useParams().pokemon;
   const dispatch: any = useDispatch();
 
   useEffect(() => {
@@ -15,7 +15,11 @@ const Pokemon = () => {
   return (
     <div className="pokemon">
       <h1>{pokemonName}</h1>
-      <PokemonDetailedCard pokemonName={pokemonName} />
+      {pokemonName === undefined ? (
+        ''
+      ) : (
+        <PokemonDetailedCard pokemonName={pokemonName} />
+      )}
     </div>
   );
 };

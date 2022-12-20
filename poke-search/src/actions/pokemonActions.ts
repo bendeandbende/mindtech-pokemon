@@ -1,48 +1,82 @@
 import axios from 'axios';
 
 import config from '../config';
+import { EActions, TPage } from '../types';
 
-export const GetPokemonList = (page: any) => async (dispatch: any) => {
+export const GetPokemonTypes = () => async (dispatch: any) => {
   try {
     dispatch({
-      type: 'POKEMON_LIST_LOADING',
+      type: EActions.PokemonTypesLoading,
     });
 
-    const offset = page * config.PAGE_MAX - config.PAGE_MAX;
-
-    const res = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon?limit=${config.PAGE_MAX}&offset=${offset}`
-    );
-
-    res.data.page = page;
+    const res = await axios.get(`${config.API_URL}/type`);
 
     dispatch({
-      type: 'POKEMON_LIST_SUCCESS',
+      type: EActions.PokemonTypesSuccess,
       payload: res.data,
     });
-  } catch (error: any) {
+  } catch {
     dispatch({
-      type: 'POKEMON_LIST_FAIL',
+      type: EActions.PokemonTypesFail,
     });
   }
 };
 
+export const GetPokemonList =
+  (page: TPage, pokemonType: string = 'All types') =>
+  async (dispatch: any) => {
+    try {
+      dispatch({
+        type: EActions.PokemonListLoading,
+      });
+
+      const offset = page * config.PAGE_MAX - config.PAGE_MAX;
+
+      let isSpecificTypeQuery = false;
+      let url = `${config.API_URL}/pokemon?limit=${config.PAGE_MAX}&offset=${offset}`;
+
+      if (pokemonType !== 'All types') {
+        isSpecificTypeQuery = true;
+        url = `${config.API_URL}/type/${pokemonType}`;
+      }
+
+      const res = await axios.get(url);
+      res.data.page = page;
+
+      const pokemon = isSpecificTypeQuery
+        ? res.data.pokemon.map((pok: any) => pok.pokemon)
+        : res.data.results;
+
+      dispatch({
+        type: EActions.PokemonListSuccess,
+        pokemonType,
+        pokeData: pokemon,
+        page: res.data?.page,
+        count: res.data?.count,
+      });
+    } catch {
+      dispatch({
+        type: EActions.PokemonListFail,
+      });
+    }
+  };
+
 export const getPokemon = (pokemon: any) => async (dispatch: any) => {
   try {
     dispatch({
-      type: 'POKEMON_MULTIPLE_LOADING',
+      type: EActions.PokemonMultipleLoading,
     });
 
-    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    const res = await axios.get(`${config.API_URL}/pokemon/${pokemon}`);
 
     dispatch({
-      type: 'POKEMON_MULTIPLE_SUCCESS',
+      type: EActions.PokemonMultipleSucces,
       payload: res.data,
       pokemonName: pokemon,
     });
-  } catch (error: any) {
+  } catch {
     dispatch({
-      type: 'POKEMON_MULTIPLE_FAIL',
+      type: EActions.PokemonMultipleFail,
     });
   }
 };
@@ -56,7 +90,7 @@ export const GetCaughtPokemonList = () => (dispatch: any) => {
   }
 
   dispatch({
-    type: 'POKEMON_LIST_CAUGHT',
+    type: EActions.PokemonListCaught,
     payload: caughtPokemonList,
   });
 };
@@ -79,7 +113,7 @@ export const CatchPokemon = (pokemonName: string) => (dispatch: any) => {
   }
 
   dispatch({
-    type: 'POKEMON_CAUGHT',
+    type: EActions.PokemonCaught,
     pokemonName,
   });
 };
@@ -98,7 +132,7 @@ export const ReleasePokemon = (pokemonName: string) => (dispatch: any) => {
   );
 
   dispatch({
-    type: 'POKEMON_RELEASED',
+    type: EActions.PokemonReleased,
     caughPokemonListUpdated,
   });
 };
