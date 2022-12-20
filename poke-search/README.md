@@ -6,6 +6,8 @@
 npm run start
 ```
 
+in poke-search folder
+
 ## Features
 
 ### Searchbar
